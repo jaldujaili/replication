@@ -1,0 +1,14 @@
+Concurrency curl requests
+
+ssh -L 9004:mc03.cs.usfca.edu:2261 -N jaldujaili@stargate.cs.usfca.edu
+
+curl -d '{"tickets":"5"}' -H "Content-Type: application/json" -X POST http://localhost:9004/events/12/purchase/2 &
+curl -d '{"tickets":"10"}' -H "Content-Type: application/json" -X POST http://localhost:9004/events/12/purchase/29 &
+curl -d '{"tickets":"20"}' -H "Content-Type: application/json" -X POST http://localhost:9004/events/12/purchase/299 &
+curl -d '{"tickets":"7"}' -H "Content-Type: application/json" -X POST http://localhost:9004/events/12/purchase/292 &
+curl -d '{"tickets":"12"}' -H "Content-Type: application/json" -X POST http://localhost:9004/events/12/purchase/236 &
+curl -d '{"tickets":"35"}' -H "Content-Type: application/json" -X POST http://localhost:9004/events/12/purchase/22 &
+curl -d '{"tickets":"2"}' -H "Content-Type: application/json" -X POST http://localhost:9004/events/12/purchase/23 &
+curl -d '{"tickets":"6"}' -H "Content-Type: application/json" -X POST http://localhost:9004/events/12/purchase/24
+
+curl -d '{"tickets":"2"}' -H "Content-Type: application/json" -X POST "http://localhost:9004/events/4/purchase/2[1-100]"

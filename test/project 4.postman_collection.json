@@ -1,0 +1,1335 @@
+{
+	"info": {
+		"_postman_id": "82fadeda-b4f7-4e30-af6e-6a15b67cbf5d",
+		"name": "project 4",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Should pass",
+			"description": "",
+			"item": [
+				{
+					"name": "get events",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "64ceea83-4c6e-4637-a1d5-63446e57cfd0",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"isFront\":true,\"port\":2261,\"ip\":\"10.1.59.50\"}"
+						},
+						"url": {
+							"raw": "localhost:9004/events",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create events",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a2e9489a-1b35-4999-9cba-4941f581e65d",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"should persist on other nodes[test1]\", function () {",
+									"    var obj = JSON.parse(responseBody);",
+									"    var eventId = obj.eventid;",
+									"    ",
+									"    pm.sendRequest(\"localhost:9001/\"+eventId, function (err, response) {",
+									"    pm.response.to.have.status(200);",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"should persist on other nodes[test2]\", function () {",
+									"    var obj = JSON.parse(responseBody);",
+									"    var eventId = obj.eventid;",
+									"    ",
+									"    pm.sendRequest(\"localhost:9001/\"+eventId, function (err, response) {",
+									"    pm.response.to.have.status(200);",
+									"    });",
+									"});",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userid\": 219,\n\t\"eventname\": \"event {{$randomInt}}\",\n\t\"numtickets\": 50\n}"
+						},
+						"url": {
+							"raw": "localhost:9004/events/create",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"events",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get an event",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ffd6ea7e-b7d3-48e0-8cde-967e10612c73",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:9004/events/1",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"events",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "purchase tickets",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "96a14927-25f4-4646-a8d3-96119e849717",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"should persist on other nodes[test1]\", function () {",
+									"    var obj = JSON.parse(responseBody);",
+									"    var eventId = obj.eventid;",
+									"    ",
+									"    pm.sendRequest(\"localhost:9001/\"+eventId, function (err, response) {",
+									"    pm.response.to.have.status(200);",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"tickets\": 2\n}"
+						},
+						"url": {
+							"raw": "localhost:9004/events/1/purchase/219",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"events",
+								"1",
+								"purchase",
+								"219"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d847244b-8bb8-419a-8cf2-076186722c34",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"string{{$randomInt}}\"\n}"
+						},
+						"url": {
+							"raw": "localhost:9004/users/create",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"users",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "88e387fa-a688-4242-9b25-133ab5feeaf7",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:9004/users/219",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"users",
+								"219"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "transfer tickets",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "605383c3-36cf-48dc-b8ec-29cc56994ab2",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"eventid\": 3,\n\t\"tickets\": 2,\n\t\"targetuser\": 220\n}"
+						},
+						"url": {
+							"raw": "localhost:9004/users/219/tickets/transfer",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"users",
+								"219",
+								"tickets",
+								"transfer"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "shouldn't pass",
+			"description": "",
+			"item": [
+				{
+					"name": "bad get url",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"isFront\":true,\"port\":2261,\"ip\":\"10.1.59.50\"}"
+						},
+						"url": {
+							"raw": "localhost:9004/eventss",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"eventss"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "bad post url",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userid\": 219,\n\t\"eventname\": \"event {{$randomInt}}\",\n\t\"numtickets\": 50\n}"
+						},
+						"url": {
+							"raw": "localhost:9004/events/createss",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"events",
+								"createss"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "bad user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userid\": 2190000,\n\t\"eventname\": \"event {{$randomInt}}\",\n\t\"numtickets\": 50\n}"
+						},
+						"url": {
+							"raw": "localhost:9004/events/create",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"events",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "invalid ticket number",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userid\": 219,\n\t\"eventname\": \"event {{$randomInt}}\",\n\t\"numtickets\": -1\n}"
+						},
+						"url": {
+							"raw": "localhost:9004/events/create",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"events",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "bad event request shouldnt exist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:9004/events/999999",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"events",
+								"999999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "too many tickets",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"tickets\": 100000\n}"
+						},
+						"url": {
+							"raw": "localhost:9004/events/1/purchase/219",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"events",
+								"1",
+								"purchase",
+								"219"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "event doesnt exist to purchase",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"tickets\": 2\n}"
+						},
+						"url": {
+							"raw": "localhost:9004/events/9999999/purchase/219",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"events",
+								"9999999",
+								"purchase",
+								"219"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "bad target user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"eventid\": 3,\n\t\"tickets\": 2,\n\t\"targetuser\": 9999999\n}"
+						},
+						"url": {
+							"raw": "localhost:9004/users/219/tickets/transfer",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"users",
+								"219",
+								"tickets",
+								"transfer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "not enough tickets to give",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"eventid\": 3,\n\t\"tickets\": 9999,\n\t\"targetuser\": 220\n}"
+						},
+						"url": {
+							"raw": "localhost:9004/users/219/tickets/transfer",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"users",
+								"219",
+								"tickets",
+								"transfer"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "for local tests",
+			"description": "",
+			"item": [
+				{
+					"name": "get events",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "64ceea83-4c6e-4637-a1d5-63446e57cfd0",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"isFront\":true,\"port\":2261,\"ip\":\"10.1.59.50\"}"
+						},
+						"url": {
+							"raw": "localhost:2261/events",
+							"host": [
+								"localhost"
+							],
+							"port": "2261",
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get events Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "64ceea83-4c6e-4637-a1d5-63446e57cfd0",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"isFront\":true,\"port\":2261,\"ip\":\"10.1.59.50\"}"
+						},
+						"url": {
+							"raw": "localhost:2261/events",
+							"host": [
+								"localhost"
+							],
+							"port": "2261",
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create events",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "63bf07d7-ceeb-4756-815d-d81e1bd5b16b",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    var obj = JSON.parse(responseBody);",
+									"    var eventId = obj.eventid;",
+									"    ",
+									"    pm.sendRequest(\"localhost:2252/\"+eventId, function (err, response) {",
+									"    console.log(\"localhost:2252/\"+eventId);",
+									"    pm.response.to.have.status(200);",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userid\": 219,\n\t\"eventname\": \"event {{$randomInt}}\",\n\t\"numtickets\": 50\n}"
+						},
+						"url": {
+							"raw": "localhost:2261/events/create",
+							"host": [
+								"localhost"
+							],
+							"port": "2261",
+							"path": [
+								"events",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "purchase tickets",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0e24acad-4dbc-438a-b7c7-409c206f94db",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"tickets\": 2\n}"
+						},
+						"url": {
+							"raw": "localhost:2261/events/2/purchase/219",
+							"host": [
+								"localhost"
+							],
+							"port": "2261",
+							"path": [
+								"events",
+								"2",
+								"purchase",
+								"219"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f82774e2-537d-408a-8db7-a206327efc86",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    var obj = JSON.parse(responseBody);",
+									"    var userid = obj.userid;",
+									"    pm.globals.set(\"userid\", userid);",
+									"    ",
+									"    pm.sendRequest(\"localhost:2261/events/2\", function (err, response) {",
+									"        pm.globals.set(\"purchased\", JSON.parse(responseBody).purchased);",
+									"    });",
+									"    ",
+									"    pm.sendRequest({url:\"localhost:2261/events/2/purchase/\"+userid, method: 'POST', header: {",
+									"        'content-type': 'application/json',",
+									"        'x-site-code': pm.environment.get(\"x-site-code\")",
+									"    },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({ tickets: 2 })",
+									"    }},  function (err, response){",
+									"    pm.response.to.have.status(200);",
+									"    ",
+									"    });",
+									"});",
+									"",
+									"//  pm.test(\"should have something purchased\", function(){",
+									"//         pm.sendRequest(\"localhost:4454/\"+ pm.globals.get(\"userid\"), function (err, response){",
+									"//             var obj2 = JSON.parse(responseBody);",
+									"//             console.log(obj2);",
+									"//             // pm.expect(obj2.tickets.length).to.equal(2);",
+									"        ",
+									"//         });",
+									"// });",
+									"",
+									"// pm.test(\"purchase should have increased by two\", function(){",
+									"//         pm.sendRequest(\"localhost:2252/2\", function (err, response){",
+									"//             var obj2 = JSON.parse(this.responseBody);",
+									"//             console.log(obj2);",
+									"//             // pm.expect(obj2.tickets.length).to.equal(2);",
+									"        ",
+									"//         });",
+									"// });",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"jo{{$randomInt}}\"\n}"
+						},
+						"url": {
+							"raw": "localhost:2261/users/create",
+							"host": [
+								"localhost"
+							],
+							"port": "2261",
+							"path": [
+								"users",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "88e387fa-a688-4242-9b25-133ab5feeaf7",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:4454/219",
+							"host": [
+								"localhost"
+							],
+							"port": "4454",
+							"path": [
+								"219"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "demonstration",
+			"description": "",
+			"item": [
+				{
+					"name": "get events 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "64ceea83-4c6e-4637-a1d5-63446e57cfd0",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"isFront\":true,\"port\":2261,\"ip\":\"10.1.59.50\"}"
+						},
+						"url": {
+							"raw": "localhost:9004/events",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get events 1(node1)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "64ceea83-4c6e-4637-a1d5-63446e57cfd0",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"isFront\":true,\"port\":2261,\"ip\":\"10.1.59.50\"}"
+						},
+						"url": {
+							"raw": "localhost:9004/events",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get events 1(node2)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "64ceea83-4c6e-4637-a1d5-63446e57cfd0",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"isFront\":true,\"port\":2261,\"ip\":\"10.1.59.50\"}"
+						},
+						"url": {
+							"raw": "localhost:9004/events",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create events & checks nodes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "63bf07d7-ceeb-4756-815d-d81e1bd5b16b",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    var obj = JSON.parse(responseBody);",
+									"    var eventId = obj.eventid;",
+									"    ",
+									"    pm.sendRequest(\"localhost:2252/\"+eventId, function (err, response) {",
+									"    console.log(\"localhost:2252/\"+eventId);",
+									"    pm.response.to.have.status(200);",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userid\": 219,\n\t\"eventname\": \"event {{$randomInt}}\",\n\t\"numtickets\": 50\n}"
+						},
+						"url": {
+							"raw": "localhost:2261/events/create",
+							"host": [
+								"localhost"
+							],
+							"port": "2261",
+							"path": [
+								"events",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get an event of create(node1)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ffd6ea7e-b7d3-48e0-8cde-967e10612c73",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:9004/events/1",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"events",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get an event of create(node2)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ffd6ea7e-b7d3-48e0-8cde-967e10612c73",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:9004/events/1",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"events",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create user 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d847244b-8bb8-419a-8cf2-076186722c34",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"string{{$randomInt}}\"\n}"
+						},
+						"url": {
+							"raw": "localhost:9004/users/create",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"users",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get an event to see before purchase",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ffd6ea7e-b7d3-48e0-8cde-967e10612c73",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:9004/events/1",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"events",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "purchase for new user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "96a14927-25f4-4646-a8d3-96119e849717",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"should persist on other nodes[test1]\", function () {",
+									"    var obj = JSON.parse(responseBody);",
+									"    var eventId = obj.eventid;",
+									"    ",
+									"    pm.sendRequest(\"localhost:9001/\"+eventId, function (err, response) {",
+									"    pm.response.to.have.status(200);",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"tickets\": 2\n}"
+						},
+						"url": {
+							"raw": "localhost:9004/events/1/purchase/219",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"events",
+								"1",
+								"purchase",
+								"219"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get an event of purchase(node1)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ffd6ea7e-b7d3-48e0-8cde-967e10612c73",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:9004/events/1",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"events",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get an event of purchase(node2)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ffd6ea7e-b7d3-48e0-8cde-967e10612c73",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:9004/events/1",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"events",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
